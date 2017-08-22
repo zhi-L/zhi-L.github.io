@@ -2,7 +2,7 @@
 <html lang="zh">
 <head>
         <meta charset="utf-8" />
-        <title>zhi - Python</title>
+        <title>智@DevOps之路 - python</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
 
         <!--[if IE]>
@@ -12,27 +12,338 @@
 
 <body id="index" class="home">
         <header id="banner" class="body">
-                <h1><a href="/">zhi </a></h1>
+                <h1><a href="/">智@DevOps之路 </a></h1>
                 <nav><ul>
-                    <li class="active"><a href="/category/python.html">Python</a></li>
-                    <li><a href="/category/test.html">test</a></li>
+                    <li class="active"><a href="/category/python.html">python</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/my-super-post.html">My super title</a></h1>
+                    <h1 class="entry-title"><a href="/pythonfan-she-zi-sheng-xiang-jie.html">Python反射（自省）详解</a></h1>
 <footer class="post-info">
-        <abbr class="published" title="2010-12-03T10:20:00+01:00">
-                Published: 五 03 十二月 2010
+        <abbr class="published" title="2017-08-22T13:57:00+08:00">
+                Published: 二 22 八月 2017
         </abbr>
 
         <address class="vcard author">
-                By                         <a class="url fn" href="/author/alexis-metaireau.html">Alexis Metaireau</a>
+                By                         <a class="url fn" href="/author/luozhi.html">luozhi</a>
         </address>
-<p>In <a href="/category/python.html">Python</a>.</p>
-<p>tags: <a href="/tag/pelican.html">pelican</a> <a href="/tag/publishing.html">publishing</a> </p>
-</footer><!-- /.post-info --><p>This is the content of my super blog post.</p>                </article>
+<p>In <a href="/category/python.html">python</a>.</p>
+<p>tags: <a href="/tag/python.html">python</a> </p>
+</footer><!-- /.post-info --><h1>Python反射（自省）详解</h1>
+<blockquote>
+<p>反射：可以理解为用字符串的形式去加载模块或者操作成员的属性、方法。</p>
+</blockquote>
+<p>解释Python的反射，先提一个简单的需求，现在我有一个简易的网站，由两个文件组成，一个是具体执行操作  的commons.py文件，一个是入口文件index.py，现在我需要在入口文件中设置，让用户输入url，根据用户  输入的url去后端执行相应的操作，内容如下：</p>
+<div class="highlight"><pre><span></span><span class="c1"># commons.py</span>
+<span class="k">def</span> <span class="nf">login</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;登录页面!&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">logout</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;退出页面!&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;主页面&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="c1"># index.py</span>
+<span class="kn">import</span> <span class="nn">commons</span>
+
+<span class="n">inp</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;url &gt; &#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">inp</span> <span class="o">==</span> <span class="s1">&#39;login&#39;</span><span class="p">:</span>
+    <span class="n">commons</span><span class="o">.</span><span class="n">login</span><span class="p">()</span>
+<span class="k">elif</span> <span class="n">inp</span> <span class="o">==</span> <span class="s1">&#39;logout&#39;</span><span class="p">:</span>
+    <span class="n">commons</span><span class="o">.</span><span class="n">logout</span><span class="p">()</span>
+<span class="k">elif</span> <span class="n">inp</span> <span class="o">==</span> <span class="s1">&#39;index&#39;</span><span class="p">:</span>
+    <span class="n">commons</span><span class="o">.</span><span class="n">index</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;404&#39;</span><span class="p">)</span>
+
+<span class="o">------------</span>
+<span class="n">url</span> <span class="o">&gt;</span> <span class="n">login</span>
+<span class="err">登录页面!</span>
+</pre></div>
+
+
+<p>上面我使用了if判断，根据每一个url请求去后端执行指定的函数。那现在我的网站内容变多了，在commons.py中有100个页面操作，那么相对应的我在index.py中也要使用if else 对这100个页面函数进行手动指定。</p>
+<p>有了Python反射的特性，这个需求就变得异常简单了，先不多解释，先看代码(commons.py保持文件不变，还是拿三个页面的操作举例)：</p>
+<div class="highlight"><pre><span></span><span class="c1"># index.py</span>
+<span class="kn">import</span> <span class="nn">commons</span>
+
+<span class="k">def</span> <span class="nf">run</span><span class="p">():</span>
+    <span class="n">inp</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;url &gt; &#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">commons</span><span class="p">,</span> <span class="n">inp</span><span class="p">):</span>
+        <span class="n">func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">commons</span><span class="p">,</span> <span class="n">inp</span><span class="p">)</span>
+        <span class="n">func</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;404&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">run</span><span class="p">()</span>
+
+<span class="o">------------</span>
+<span class="n">url</span> <span class="o">&gt;</span> <span class="n">logout</span>
+<span class="err">退出页面!</span>
+</pre></div>
+
+
+<p>通过反射，可以应对commons.py文件中任意多个页面函数的调用。
+下面看下Python反射中用到的内建函数。</p>
+<h2>getattr()</h2>
+<p>源码中的解释</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span> <span class="c1"># known special case of getattr</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    getattr(object, name[, default]) -&gt; value</span>
+
+<span class="sd">    Get a named attribute from an object; getattr(x, &#39;y&#39;) is equivalent to x.y.</span>
+<span class="sd">    When a default argument is given, it is returned when the attribute doesn&#39;t</span>
+<span class="sd">    exist; without it, an exception is raised in that case.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+</pre></div>
+
+
+<p><code>getattr()</code>函数执行成功后会将参数中对象中的方法赋值给新的变量（会返回参数中指定的对象中的方法）相当于参数中的方法又多了一个栈区的变量去引用。
+<code>getattr()</code>函数的第一个参数需要是个对象，上面的例子中，我导入了自定义的commons模块，commons就是个对象；第二个参数是指定前面对象中的一个方法名称。<code>getattr(x, 'y')</code> 等价于执行了 <code>x.y</code>。假如第二个参数输入了前面对象中不存在的方法，该函数会抛出异常并退出。所以这个时候，为了程序的健壮性，我们需要先判断一下该对象中有没有这个方法，使用<code>hasattr()</code>。</p>
+<h2>hasattr()</h2>
+<p>源码中的解释</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">hasattr</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span> <span class="c1"># real signature unknown</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return whether the object has an attribute with the given name.</span>
+
+<span class="sd">    This is done by calling getattr(obj, name) and catching AttributeError.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+</pre></div>
+
+
+<p><code>hasattr()</code>函数返回对象是否拥有指定名称的属性，简单的说就是检查在第一个参数的对象中，能否找到与第二参数名相同的方法。源码的解释还说，该函数的实现其实就是调用了<code>getattr()</code>函数，只不过它捕获了异常而已。所以通过这个函数，我们可以先去判断对象中有没有这个方法，有则使用<code>getattr()</code>来获取该方法。</p>
+<h2>delattr()</h2>
+<p>删除指定对象中的指定方法，特别提示：只是在本次运行程序的内存中将该方法删除，并没有影响到文件的内容</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">commons</span>
+
+<span class="k">print</span><span class="p">(</span><span class="nb">dir</span><span class="p">(</span><span class="n">commons</span><span class="p">))</span>
+<span class="nb">delattr</span><span class="p">(</span><span class="n">commons</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">dir</span><span class="p">(</span><span class="n">commons</span><span class="p">))</span>
+
+<span class="o">------------</span>
+<span class="p">[</span><span class="s1">&#39;__builtins__&#39;</span><span class="p">,</span> <span class="s1">&#39;__cached__&#39;</span><span class="p">,</span> <span class="s1">&#39;__doc__&#39;</span><span class="p">,</span> <span class="s1">&#39;__file__&#39;</span><span class="p">,</span> <span class="s1">&#39;__loader__&#39;</span><span class="p">,</span> <span class="s1">&#39;__name__&#39;</span><span class="p">,</span> <span class="s1">&#39;__package__&#39;</span><span class="p">,</span> <span class="s1">&#39;__spec__&#39;</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="s1">&#39;login&#39;</span><span class="p">,</span> <span class="s1">&#39;logout&#39;</span><span class="p">]</span>
+<span class="p">[</span><span class="s1">&#39;__builtins__&#39;</span><span class="p">,</span> <span class="s1">&#39;__cached__&#39;</span><span class="p">,</span> <span class="s1">&#39;__doc__&#39;</span><span class="p">,</span> <span class="s1">&#39;__file__&#39;</span><span class="p">,</span> <span class="s1">&#39;__loader__&#39;</span><span class="p">,</span> <span class="s1">&#39;__name__&#39;</span><span class="p">,</span> <span class="s1">&#39;__package__&#39;</span><span class="p">,</span> <span class="s1">&#39;__spec__&#39;</span><span class="p">,</span> <span class="s1">&#39;login&#39;</span><span class="p">,</span> <span class="s1">&#39;logout&#39;</span><span class="p">]</span>
+</pre></div>
+
+
+<h2>setattr()</h2>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">setattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span> <span class="c1"># real signature unknown; restored from __doc__</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sets the named attribute on the given object to the specified value.</span>
+
+<span class="sd">    setattr(x, &#39;y&#39;, v) is equivalent to ``x.y = v&#39;&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+</pre></div>
+
+
+<p><code>setattr()</code>函数用来给指定对象中的方法重新赋值（将新的函数体/方法体赋值给指定的对象名）仅在本次程序运行的内存中生效。<code>setattr(x, 'y', v)</code> 等价于 <code>x.y = v</code></p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">commons</span>
+
+<span class="n">commons</span><span class="o">.</span><span class="n">index</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">newindex</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;new 主页面!&#39;</span><span class="p">)</span>
+
+<span class="nb">setattr</span><span class="p">(</span><span class="n">commons</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="n">newindex</span><span class="p">)</span>
+
+<span class="n">commons</span><span class="o">.</span><span class="n">index</span><span class="p">()</span>
+
+<span class="o">------------</span>
+<span class="err">主页面</span>
+<span class="n">new</span> <span class="err">主页面!</span>
+</pre></div>
+
+
+<h2>__import__</h2>
+<p>随着网站的发展，功能有了扩展。现在一个后台文件已经不能满足需求，这个时候需要根据只能划分后台文件。例如新增了一个account.py这个用户管理类的文件，也需要导入到首页以备调用。
+由于模块的导入也需要使用Python反射的特性，所以模块名也要加入到url中，所以现在url请求变成了类似于commons/index的形式。</p>
+<div class="highlight"><pre><span></span><span class="c1"># account.py</span>
+<span class="k">def</span> <span class="nf">add_user</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;添加用户&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">del_user</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;删除用户&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="c1"># commons.py</span>
+<span class="k">def</span> <span class="nf">login</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;登录页面!&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">logout</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;退出页面!&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;主页面&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="c1"># index.py</span>
+<span class="k">def</span> <span class="nf">run</span><span class="p">():</span>
+    <span class="n">inp</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;url &gt; &#39;</span><span class="p">)</span>
+    <span class="n">m</span><span class="p">,</span> <span class="n">f</span> <span class="o">=</span> <span class="n">inp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+    <span class="n">obj_module</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj_module</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+        <span class="n">func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj_module</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+        <span class="n">func</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;404&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">run</span><span class="p">()</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="c1"># 执行</span>
+<span class="c1"># python3 index.py</span>
+<span class="n">url</span> <span class="o">&gt;</span> <span class="n">account</span><span class="o">/</span><span class="n">add_user</span>
+<span class="err">添加用户</span>
+
+<span class="c1"># python3 index.py</span>
+<span class="n">url</span> <span class="o">&gt;</span> <span class="n">commons</span><span class="o">/</span><span class="n">login</span>
+<span class="err">登录页面!</span>
+</pre></div>
+
+
+<p>现在网站进一步细化分工，多了一层目录结构，如下所示：</p>
+<div class="highlight"><pre><span></span>|- index.py
+|- commons.py
+|- account.py
+|- lib
+    |- __init__.py
+    |- connectdb.py
+</pre></div>
+
+
+<p>想在index页面中调用lib包下connectdb模块中的方法，之前的方式不能满足需求了。试一下</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run</span><span class="p">():</span>
+    <span class="n">inp</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;url &gt; &#39;</span><span class="p">)</span>
+    <span class="n">m</span><span class="p">,</span> <span class="n">f</span> <span class="o">=</span> <span class="n">inp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+    <span class="n">obj_module</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="s1">&#39;lib.&#39;</span> <span class="o">+</span> <span class="n">m</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj_module</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+        <span class="n">func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj_module</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+        <span class="n">func</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;404&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">run</span><span class="p">()</span>
+
+<span class="o">------------</span>
+<span class="mi">404</span>
+</pre></div>
+
+
+<p>看下<code>__import __</code>源码：</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__import__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">globals</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="nb">locals</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">fromlist</span><span class="o">=</span><span class="p">(),</span> <span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span> <span class="c1"># real signature unknown; restored from __doc__</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    __import__(name, globals=None, locals=None, fromlist=(), level=0) -&gt; module</span>
+
+<span class="sd">    Import a module. Because this function is meant for use by the Python</span>
+<span class="sd">    interpreter and not for general use it is better to use</span>
+<span class="sd">    importlib.import_module() to programmatically import a module.</span>
+
+<span class="sd">    The globals argument is only used to determine the context;</span>
+<span class="sd">    they are not modified.  The locals argument is unused.  The fromlist</span>
+<span class="sd">    should be a list of names to emulate ``from name import ...&#39;&#39;, or an</span>
+<span class="sd">    empty list to emulate ``import name&#39;&#39;.</span>
+<span class="sd">    When importing a module from a package, note that __import__(&#39;A.B&#39;, ...)</span>
+<span class="sd">    returns package A when fromlist is empty, but its submodule B when</span>
+<span class="sd">    fromlist is not empty.  Level is used to determine whether to perform </span>
+<span class="sd">    absolute or relative imports. 0 is absolute while a positive number</span>
+<span class="sd">    is the number of parent directories to search relative to the current module.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+</pre></div>
+
+
+<p>__import__函数中有一个fromlist参数，源码解释说，如果在一个包中导入一个模块，这个参数如果为空，则return这个包对象，如果这个参数不为空，则返回包下面指定的模块对象，于是做出如下修改:</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run</span><span class="p">():</span>
+    <span class="n">inp</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;url &gt; &#39;</span><span class="p">)</span>
+    <span class="n">m</span><span class="p">,</span> <span class="n">f</span> <span class="o">=</span> <span class="n">inp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+    <span class="n">obj_module</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="s1">&#39;lib.&#39;</span> <span class="o">+</span> <span class="n">m</span><span class="p">,</span> <span class="n">fromlist</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj_module</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+        <span class="n">func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj_module</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+        <span class="n">func</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;404&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">run</span><span class="p">()</span>
+
+<span class="o">------------</span>
+<span class="n">url</span> <span class="o">&gt;</span> <span class="n">connectdb</span><span class="o">/</span><span class="n">mysql</span>
+<span class="err">已连接</span><span class="n">mysql</span>
+</pre></div>
+
+
+<p>上面的代码写死了lib前缀，相当于抛弃了commons和account两个导入的功能，所以以上代码并不完善，需求复杂后，还是需要对请求的url做一下判断</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run</span><span class="p">():</span>
+    <span class="n">inp</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;url &gt; &#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">m</span><span class="p">,</span> <span class="n">f</span> <span class="o">=</span> <span class="n">inp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+        <span class="n">obj_module</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj_module</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj_module</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+            <span class="n">func</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;404&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">p</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">f</span> <span class="o">=</span> <span class="n">inp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+        <span class="n">obj_module</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">p</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">m</span><span class="p">,</span> <span class="n">fromlist</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj_module</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj_module</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+            <span class="n">func</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;404&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">run</span><span class="p">()</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="c1"># 执行</span>
+<span class="c1"># python3 index.py</span>
+<span class="n">url</span> <span class="o">&gt;</span> <span class="n">lib</span><span class="o">/</span><span class="n">connectdb</span><span class="o">/</span><span class="n">mysql</span>
+<span class="err">已连接</span><span class="n">mysql</span>
+
+<span class="c1"># python3 index.py</span>
+<span class="n">url</span> <span class="o">&gt;</span> <span class="n">account</span><span class="o">/</span><span class="n">del_user</span>
+<span class="err">删除用户</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run</span><span class="p">():</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">m</span><span class="p">,</span> <span class="n">f</span> <span class="o">=</span> <span class="n">inp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+        <span class="n">obj_module</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+        <span class="n">getf</span><span class="p">(</span><span class="n">obj_module</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">p</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">f</span> <span class="o">=</span> <span class="n">inp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+        <span class="n">obj_module</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">p</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">m</span><span class="p">,</span> <span class="n">fromlist</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">getf</span><span class="p">(</span><span class="n">obj_module</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">getf</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+        <span class="n">func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+        <span class="n">func</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;404&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">inp</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;url &gt; &#39;</span><span class="p">)</span>
+    <span class="n">run</span><span class="p">()</span>
+</pre></div>                </article>
             </aside><!-- /#featured -->
         <section id="extras" class="body">
                 <div class="blogroll">
@@ -41,15 +352,14 @@
                             <li><a href="http://getpelican.com/">Pelican</a></li>
                             <li><a href="http://python.org/">Python.org</a></li>
                             <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
-                            <li><a href="#">You can modify those links in your config file</a></li>
                         </ul>
                 </div><!-- /.blogroll -->
                 <div class="social">
                         <h2>social</h2>
                         <ul>
 
-                            <li><a href="#">You can add links in your config file</a></li>
-                            <li><a href="#">Another social link</a></li>
+                            <li><a href="#"></a></li>
+                            <li><a href="#"></a></li>
                         </ul>
                 </div><!-- /.social -->
         </section><!-- /#extras -->
