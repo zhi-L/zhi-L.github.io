@@ -20,7 +20,375 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/pythonfan-she-zi-sheng-xiang-jie.html">Python反射（自省）详解</a></h1>
+                    <h1 class="entry-title"><a href="/pythonmian-xiang-dui-xiang-xiang-jie.html">Python面向对象详解</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-09-02T18:57:00+08:00">
+                Published: 六 02 九月 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/luozhi.html">luozhi</a>
+        </address>
+<p>In <a href="/category/python.html">python</a>.</p>
+<p>tags: <a href="/tag/python.html">python</a> </p>
+</footer><!-- /.post-info --><h1>Python面向对象详解</h1>
+<blockquote>
+<p>面向对象的设计思想来自于自然界，将函数进行分类封装。
+面向对象编程（Object Oriented Programming，OOP，面向对象程序设计）
+面向对象的三大特点，封装、继承和多态。</p>
+</blockquote>
+<h2>一、封装</h2>
+<p>将实现某一特定功能的函数封装到一个类中。以便在其他地方可以更方便的调用。
+首先看Python的面向对象中涉及的一些概念。 </p>
+<h3>1、概念</h3>
+<ul>
+<li>类：类是对现实世界中一些实物的封装。</li>
+<li>类对象：定义一个类之后便会产生一个类对象。</li>
+<li>实例对象：类实例化操作之后便会产生一个实例对象。</li>
+<li>类属性：类对象拥有的属性，被类对象的所有实例对象所共有，在内存中只存在一个副本。</li>
+<li>实例属性：为某个实例对象所特有。</li>
+<li>方法：与某个对象绑定的函数称作为方法，类中定义的函数一般与类对象或者实例对象绑定了，所以称之为方法。</li>
+<li>函数：类外定义的函数。</li>
+</ul>
+<p>下面看一个具体的例子</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">People</span><span class="p">:</span>
+
+    <span class="n">planet</span> <span class="o">=</span> <span class="s2">&quot;Earth&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="n">age</span>
+
+    <span class="k">def</span> <span class="nf">printMessgae</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;country : {},&#39;</span>
+              <span class="s1">&#39;name : {}, &#39;</span>
+              <span class="s1">&#39;age : {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">People</span><span class="o">.</span><span class="n">Planet</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">age</span><span class="p">))</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">People</span><span class="p">(</span><span class="s1">&#39;lz&#39;</span><span class="p">,</span> <span class="mi">18</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">printMessgae</span><span class="p">()</span>
+</pre></div>
+
+
+<p>上面定义了一个类People，则产生了一个类对象People。
+通过类对象实例化了一个实例对象p。
+country为类属性，name,age为实例属性。
+printMessage()为方法。</p>
+<h3>2、属性</h3>
+<p>属性包括：</p>
+<ul>
+<li>类属性：属于类对象。在内存中只保存一份。</li>
+<li>实例属性：属于实例对象。在每个对象中都保存一份。</li>
+</ul>
+<p>从上面的概念和例子中可看到他们在定义和使用中有所区别。本质的区别在于<strong>在内存中保存的位置不同</strong>。</p>
+<h3>3、方法</h3>
+<p>方法包括类方法，实例方法和静态方法。三种方法在<strong>内存中都归属于类</strong>，在内存中只保存一份。</p>
+<h4>（1）、类方法，实例方法以及静态方法</h4>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>装饰器</th>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>类方法</td>
+<td>@classmethod</td>
+<td>第一个参数必须是类对象，一般为cls</td>
+<td>一般通过类对象调用，可以用来修改类属性。</td>
+</tr>
+<tr>
+<td>实例方法</td>
+<td>无</td>
+<td>第一个参数必须为实例对象，一般为self</td>
+<td>只能通过实例对象调用。</td>
+</tr>
+<tr>
+<td>静态方法</td>
+<td>@staticmethod</td>
+<td>不需要定义参数</td>
+<td>通过类对象调用。</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">People</span><span class="p">:</span>
+
+    <span class="n">planet</span> <span class="o">=</span> <span class="s2">&quot;Earth&quot;</span>
+    <span class="n">__birth</span> <span class="o">=</span> <span class="s1">&#39;niceMan&#39;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="n">age</span>
+
+    <span class="k">def</span> <span class="nf">printMessgae</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;country : {},&#39;</span>
+              <span class="s1">&#39;name : {}, &#39;</span>
+              <span class="s1">&#39;age : {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">People</span><span class="o">.</span><span class="n">planet</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">age</span><span class="p">))</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">getPlanet</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">planet</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">setPlanet</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span><span class="n">planet</span><span class="p">):</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">planet</span> <span class="o">=</span> <span class="n">planet</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">planet</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">getBirth</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">People</span><span class="o">.</span><span class="n">__birth</span>
+</pre></div>
+
+
+<p>上面例子中，printMessage()为普通方法，getPlanet()，setPlanet()为类方法。getBirth()为静态方法。</p>
+<h4>（2）、特殊方法</h4>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>__init__(self,...)</td>
+<td>构造函数，初始化对象，在创建新对象时调用</td>
+</tr>
+<tr>
+<td>__del__(self)</td>
+<td>析构函数，释放对象，在对象被删除之前调用</td>
+</tr>
+<tr>
+<td>__new__(cls,<em>args,</em>*kwd)</td>
+<td>实例的生成操作，在__init__之前被调用。</td>
+</tr>
+<tr>
+<td>__str__(self)</td>
+<td>在使用print语句时被调用</td>
+</tr>
+<tr>
+<td>__getitem__(self,key)</td>
+<td>获取序列的索引key对应的值，等价于seq[key]</td>
+</tr>
+<tr>
+<td>__setitem__(self, key, vaule)</td>
+<td>设置key对应的值</td>
+</tr>
+<tr>
+<td>__delitem__(self, key)</td>
+<td>删除key对应的值</td>
+</tr>
+<tr>
+<td>__iter__(self)</td>
+<td>用于迭代器</td>
+</tr>
+<tr>
+<td>__len__(self)</td>
+<td>在调用内联函数len()时被调用</td>
+</tr>
+<tr>
+<td>__cmp__(stc,dst)</td>
+<td>比较两个对象src和dst</td>
+</tr>
+<tr>
+<td>__getattr__(s,name)</td>
+<td>获取属性的值</td>
+</tr>
+<tr>
+<td>__setattr__(s,name,value)</td>
+<td>设置属性的值</td>
+</tr>
+<tr>
+<td>__delattr__(s,name)</td>
+<td>删除name属性</td>
+</tr>
+<tr>
+<td>__getattribute__()</td>
+<td>_<em>getattribute__()功能与__getattr_</em>()类似</td>
+</tr>
+<tr>
+<td>__gt__(self,other)</td>
+<td>判断self对象是否大于other对象</td>
+</tr>
+<tr>
+<td>__lt__(slef,other)</td>
+<td>判断self对象是否小于other对象</td>
+</tr>
+<tr>
+<td>__ge__(slef,other)</td>
+<td>判断self对象是否大于或者等于other对象</td>
+</tr>
+<tr>
+<td>__le__(slef,other)</td>
+<td>判断self对象是否小于或者等于other对象</td>
+</tr>
+<tr>
+<td>__eq__(slef,other)</td>
+<td>判断self对象是否等于other对象</td>
+</tr>
+<tr>
+<td>__call__(self,*args)</td>
+<td>把实例对象作为函数调用</td>
+</tr>
+<tr>
+<td>__doc__(self)</td>
+<td>类的描述信息</td>
+</tr>
+<tr>
+<td>__module__(self)</td>
+<td>当前操作所在的模块</td>
+</tr>
+<tr>
+<td>__class__(self)</td>
+<td>当前操作对象所属的类</td>
+</tr>
+<tr>
+<td>__dict__(self)</td>
+<td>类或者对象的所有成员</td>
+</tr>
+</tbody>
+</table>
+<h3>3、成员修饰符</h3>
+<blockquote>
+<p>成员包括属性和方法。</p>
+</blockquote>
+<p>成员修饰符：</p>
+<ul>
+<li>公有成员：任何地方都可以访问。</li>
+<li>私有成员：只在类的内部可以访问。定义的方法是在命名时，在名字前面加两个下划线'__'</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">People</span><span class="p">:</span>
+
+    <span class="n">planet</span> <span class="o">=</span> <span class="s2">&quot;Earth&quot;</span>
+    <span class="n">__birth</span> <span class="o">=</span> <span class="s1">&#39;niceMan&#39;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="n">age</span>
+
+    <span class="k">def</span> <span class="nf">printMessgae</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;country : {},&#39;</span>
+              <span class="s1">&#39;name : {}, &#39;</span>
+              <span class="s1">&#39;age : {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">People</span><span class="o">.</span><span class="n">planet</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">age</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__eat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+
+
+<p>其中planet为公有属性，__birth为私有属性。
+printMessage()位公有方法，__eat()为私有方法。
+<em>ps：如果想要强制访问私有字段，可以通过 【对象._类名__私有字段名 】访问（如：obj._C__foo），不建议强制访问私有成员。</em></p>
+<h2>二、继承</h2>
+<p>通过继承，子类可以继承并扩展父类的功能。
+被继承的类称为父类、超类或者基类。继承的类称为子类。
+Python继承支持多重继承，能够让一个子类拥有多个父类。多个父类之间用逗号隔开。</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">UniversityMember</span><span class="p">:</span>  
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="n">age</span><span class="p">):</span>  
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>  
+        <span class="bp">self</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="n">age</span>  
+
+    <span class="k">def</span> <span class="nf">getName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>  
+
+    <span class="k">def</span> <span class="nf">getAge</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">age</span>  
+
+<span class="k">class</span> <span class="nc">Student</span><span class="p">(</span><span class="n">UniversityMember</span><span class="p">):</span>  
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="n">age</span><span class="p">,</span><span class="n">sno</span><span class="p">,</span><span class="n">mark</span><span class="p">):</span>  
+        <span class="n">UniversityMember</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="n">age</span><span class="p">)</span>     <span class="c1">#注意要显示调用父类构造方法，并传递参数self  </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sno</span> <span class="o">=</span> <span class="n">sno</span>  
+        <span class="bp">self</span><span class="o">.</span><span class="n">mark</span> <span class="o">=</span> <span class="n">mark</span>  
+
+    <span class="k">def</span> <span class="nf">getSno</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sno</span>  
+
+    <span class="k">def</span> <span class="nf">getMark</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mark</span>  
+
+
+
+<span class="k">class</span> <span class="nc">Teacher</span><span class="p">(</span><span class="n">UniversityMember</span><span class="p">):</span>  
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="n">age</span><span class="p">,</span><span class="n">tno</span><span class="p">,</span><span class="n">salary</span><span class="p">):</span>  
+        <span class="n">UniversityMember</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="n">age</span><span class="p">)</span>  
+        <span class="bp">self</span><span class="o">.</span><span class="n">tno</span> <span class="o">=</span> <span class="n">tno</span>  
+        <span class="bp">self</span><span class="o">.</span><span class="n">salary</span> <span class="o">=</span> <span class="n">salary</span>  
+
+    <span class="k">def</span> <span class="nf">getTno</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tno</span>  
+
+    <span class="k">def</span> <span class="nf">getSalary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">salary</span>
+</pre></div>
+
+
+<p>子类实例化时，构造函数不会自动调用父类的构造函数。必须在子类中显示的调用。
+可以通过以下两种方式调用父类的构造函数：</p>
+<ul>
+<li><code>父类.__init__()</code></li>
+<li><code>super(子类， self).__init__()</code></li>
+</ul>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Base</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s2">&quot;Base created&quot;</span>
+
+<span class="k">class</span> <span class="nc">ChildA</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">Base</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">ChildB</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ChildB</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</pre></div>
+
+
+<h2>三、多态</h2>
+<p>我理解Python的多态就是，子类可以直接继承使用父类的方法。同时也可以根据子类的需求，重写父类的方法。</p>
+<ul>
+<li>对扩展开放（Open for extension）：允许子类重写方法函数</li>
+<li>对修改封闭（Closed for modification）：不重写，直接继承父类方法函数</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Person</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="n">sex</span><span class="p">):</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">sex</span> <span class="o">=</span> <span class="n">sex</span>
+
+     <span class="k">def</span> <span class="nf">print_title</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sex</span> <span class="o">==</span> <span class="s2">&quot;male&quot;</span><span class="p">:</span>
+             <span class="k">print</span><span class="p">(</span><span class="s2">&quot;man&quot;</span><span class="p">)</span>
+         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">sex</span> <span class="o">==</span> <span class="s2">&quot;female&quot;</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;woman&quot;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Person</span><span class="p">):</span>                <span class="c1"># Child 继承 Person</span>
+    <span class="k">def</span> <span class="nf">print_title</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sex</span> <span class="o">==</span> <span class="s2">&quot;male&quot;</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;boy&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">sex</span> <span class="o">==</span> <span class="s2">&quot;female&quot;</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;girl&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>上面的例子中，父类根据性别的不同，分别输出<code>male</code>和<code>female</code>。
+子类Child则重写了这一方法，根据性别的不同，分别输出<code>boy</code>和<code>girl</code>。</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/pythonfan-she-zi-sheng-xiang-jie.html" rel="bookmark"
+                           title="Permalink to Python反射（自省）详解">Python反射（自省）详解</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-08-22T13:57:00+08:00">
                 Published: 二 22 八月 2017
@@ -31,320 +399,12 @@
         </address>
 <p>In <a href="/category/python.html">python</a>.</p>
 <p>tags: <a href="/tag/python.html">python</a> </p>
-</footer><!-- /.post-info --><h1>Python反射（自省）详解</h1>
-<blockquote>
-<p>反射：可以理解为用字符串的形式去加载模块或者操作成员的属性、方法。</p>
-</blockquote>
-<p>解释Python的反射，先提一个简单的需求，现在我有一个简易的网站，由两个文件组成，一个是具体执行操作  的commons.py文件，一个是入口文件index.py，现在我需要在入口文件中设置，让用户输入url，根据用户  输入的url去后端执行相应的操作，内容如下：</p>
-<div class="highlight"><pre><span></span><span class="c1"># commons.py</span>
-<span class="k">def</span> <span class="nf">login</span><span class="p">():</span>
-    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;登录页面!&#39;</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">logout</span><span class="p">():</span>
-    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;退出页面!&#39;</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
-    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;主页面&#39;</span><span class="p">)</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span><span class="c1"># index.py</span>
-<span class="kn">import</span> <span class="nn">commons</span>
-
-<span class="n">inp</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;url &gt; &#39;</span><span class="p">)</span>
-
-<span class="k">if</span> <span class="n">inp</span> <span class="o">==</span> <span class="s1">&#39;login&#39;</span><span class="p">:</span>
-    <span class="n">commons</span><span class="o">.</span><span class="n">login</span><span class="p">()</span>
-<span class="k">elif</span> <span class="n">inp</span> <span class="o">==</span> <span class="s1">&#39;logout&#39;</span><span class="p">:</span>
-    <span class="n">commons</span><span class="o">.</span><span class="n">logout</span><span class="p">()</span>
-<span class="k">elif</span> <span class="n">inp</span> <span class="o">==</span> <span class="s1">&#39;index&#39;</span><span class="p">:</span>
-    <span class="n">commons</span><span class="o">.</span><span class="n">index</span><span class="p">()</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;404&#39;</span><span class="p">)</span>
-
-<span class="o">------------</span>
-<span class="n">url</span> <span class="o">&gt;</span> <span class="n">login</span>
-<span class="err">登录页面!</span>
-</pre></div>
-
-
-<p>上面我使用了if判断，根据每一个url请求去后端执行指定的函数。那现在我的网站内容变多了，在commons.py中有100个页面操作，那么相对应的我在index.py中也要使用if else 对这100个页面函数进行手动指定。</p>
-<p>有了Python反射的特性，这个需求就变得异常简单了，先不多解释，先看代码(commons.py保持文件不变，还是拿三个页面的操作举例)：</p>
-<div class="highlight"><pre><span></span><span class="c1"># index.py</span>
-<span class="kn">import</span> <span class="nn">commons</span>
-
-<span class="k">def</span> <span class="nf">run</span><span class="p">():</span>
-    <span class="n">inp</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;url &gt; &#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">commons</span><span class="p">,</span> <span class="n">inp</span><span class="p">):</span>
-        <span class="n">func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">commons</span><span class="p">,</span> <span class="n">inp</span><span class="p">)</span>
-        <span class="n">func</span><span class="p">()</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;404&#39;</span><span class="p">)</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">run</span><span class="p">()</span>
-
-<span class="o">------------</span>
-<span class="n">url</span> <span class="o">&gt;</span> <span class="n">logout</span>
-<span class="err">退出页面!</span>
-</pre></div>
-
-
-<p>通过反射，可以应对commons.py文件中任意多个页面函数的调用。
-下面看下Python反射中用到的内建函数。</p>
-<h2>getattr()</h2>
-<p>源码中的解释</p>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">getattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span> <span class="c1"># known special case of getattr</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    getattr(object, name[, default]) -&gt; value</span>
-
-<span class="sd">    Get a named attribute from an object; getattr(x, &#39;y&#39;) is equivalent to x.y.</span>
-<span class="sd">    When a default argument is given, it is returned when the attribute doesn&#39;t</span>
-<span class="sd">    exist; without it, an exception is raised in that case.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">pass</span>
-</pre></div>
-
-
-<p><code>getattr()</code>函数执行成功后会将参数中对象中的方法赋值给新的变量（会返回参数中指定的对象中的方法）相当于参数中的方法又多了一个栈区的变量去引用。
-<code>getattr()</code>函数的第一个参数需要是个对象，上面的例子中，我导入了自定义的commons模块，commons就是个对象；第二个参数是指定前面对象中的一个方法名称。<code>getattr(x, 'y')</code> 等价于执行了 <code>x.y</code>。假如第二个参数输入了前面对象中不存在的方法，该函数会抛出异常并退出。所以这个时候，为了程序的健壮性，我们需要先判断一下该对象中有没有这个方法，使用<code>hasattr()</code>。</p>
-<h2>hasattr()</h2>
-<p>源码中的解释</p>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">hasattr</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span> <span class="c1"># real signature unknown</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Return whether the object has an attribute with the given name.</span>
-
-<span class="sd">    This is done by calling getattr(obj, name) and catching AttributeError.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">pass</span>
-</pre></div>
-
-
-<p><code>hasattr()</code>函数返回对象是否拥有指定名称的属性，简单的说就是检查在第一个参数的对象中，能否找到与第二参数名相同的方法。源码的解释还说，该函数的实现其实就是调用了<code>getattr()</code>函数，只不过它捕获了异常而已。所以通过这个函数，我们可以先去判断对象中有没有这个方法，有则使用<code>getattr()</code>来获取该方法。</p>
-<h2>delattr()</h2>
-<p>删除指定对象中的指定方法，特别提示：只是在本次运行程序的内存中将该方法删除，并没有影响到文件的内容</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">commons</span>
-
-<span class="k">print</span><span class="p">(</span><span class="nb">dir</span><span class="p">(</span><span class="n">commons</span><span class="p">))</span>
-<span class="nb">delattr</span><span class="p">(</span><span class="n">commons</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">dir</span><span class="p">(</span><span class="n">commons</span><span class="p">))</span>
-
-<span class="o">------------</span>
-<span class="p">[</span><span class="s1">&#39;__builtins__&#39;</span><span class="p">,</span> <span class="s1">&#39;__cached__&#39;</span><span class="p">,</span> <span class="s1">&#39;__doc__&#39;</span><span class="p">,</span> <span class="s1">&#39;__file__&#39;</span><span class="p">,</span> <span class="s1">&#39;__loader__&#39;</span><span class="p">,</span> <span class="s1">&#39;__name__&#39;</span><span class="p">,</span> <span class="s1">&#39;__package__&#39;</span><span class="p">,</span> <span class="s1">&#39;__spec__&#39;</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="s1">&#39;login&#39;</span><span class="p">,</span> <span class="s1">&#39;logout&#39;</span><span class="p">]</span>
-<span class="p">[</span><span class="s1">&#39;__builtins__&#39;</span><span class="p">,</span> <span class="s1">&#39;__cached__&#39;</span><span class="p">,</span> <span class="s1">&#39;__doc__&#39;</span><span class="p">,</span> <span class="s1">&#39;__file__&#39;</span><span class="p">,</span> <span class="s1">&#39;__loader__&#39;</span><span class="p">,</span> <span class="s1">&#39;__name__&#39;</span><span class="p">,</span> <span class="s1">&#39;__package__&#39;</span><span class="p">,</span> <span class="s1">&#39;__spec__&#39;</span><span class="p">,</span> <span class="s1">&#39;login&#39;</span><span class="p">,</span> <span class="s1">&#39;logout&#39;</span><span class="p">]</span>
-</pre></div>
-
-
-<h2>setattr()</h2>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">setattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span> <span class="c1"># real signature unknown; restored from __doc__</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Sets the named attribute on the given object to the specified value.</span>
-
-<span class="sd">    setattr(x, &#39;y&#39;, v) is equivalent to ``x.y = v&#39;&#39;</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">pass</span>
-</pre></div>
-
-
-<p><code>setattr()</code>函数用来给指定对象中的方法重新赋值（将新的函数体/方法体赋值给指定的对象名）仅在本次程序运行的内存中生效。<code>setattr(x, 'y', v)</code> 等价于 <code>x.y = v</code></p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">commons</span>
-
-<span class="n">commons</span><span class="o">.</span><span class="n">index</span><span class="p">()</span>
-
-<span class="k">def</span> <span class="nf">newindex</span><span class="p">():</span>
-    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;new 主页面!&#39;</span><span class="p">)</span>
-
-<span class="nb">setattr</span><span class="p">(</span><span class="n">commons</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="n">newindex</span><span class="p">)</span>
-
-<span class="n">commons</span><span class="o">.</span><span class="n">index</span><span class="p">()</span>
-
-<span class="o">------------</span>
-<span class="err">主页面</span>
-<span class="n">new</span> <span class="err">主页面!</span>
-</pre></div>
-
-
-<h2>__import__</h2>
-<p>随着网站的发展，功能有了扩展。现在一个后台文件已经不能满足需求，这个时候需要根据只能划分后台文件。例如新增了一个account.py这个用户管理类的文件，也需要导入到首页以备调用。
-由于模块的导入也需要使用Python反射的特性，所以模块名也要加入到url中，所以现在url请求变成了类似于commons/index的形式。</p>
-<div class="highlight"><pre><span></span><span class="c1"># account.py</span>
-<span class="k">def</span> <span class="nf">add_user</span><span class="p">():</span>
-    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;添加用户&#39;</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">del_user</span><span class="p">():</span>
-    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;删除用户&#39;</span><span class="p">)</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span><span class="c1"># commons.py</span>
-<span class="k">def</span> <span class="nf">login</span><span class="p">():</span>
-    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;登录页面!&#39;</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">logout</span><span class="p">():</span>
-    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;退出页面!&#39;</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
-    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;主页面&#39;</span><span class="p">)</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span><span class="c1"># index.py</span>
-<span class="k">def</span> <span class="nf">run</span><span class="p">():</span>
-    <span class="n">inp</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;url &gt; &#39;</span><span class="p">)</span>
-    <span class="n">m</span><span class="p">,</span> <span class="n">f</span> <span class="o">=</span> <span class="n">inp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
-    <span class="n">obj_module</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj_module</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
-        <span class="n">func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj_module</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
-        <span class="n">func</span><span class="p">()</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;404&#39;</span><span class="p">)</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">run</span><span class="p">()</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span><span class="c1"># 执行</span>
-<span class="c1"># python3 index.py</span>
-<span class="n">url</span> <span class="o">&gt;</span> <span class="n">account</span><span class="o">/</span><span class="n">add_user</span>
-<span class="err">添加用户</span>
-
-<span class="c1"># python3 index.py</span>
-<span class="n">url</span> <span class="o">&gt;</span> <span class="n">commons</span><span class="o">/</span><span class="n">login</span>
-<span class="err">登录页面!</span>
-</pre></div>
-
-
-<p>现在网站进一步细化分工，多了一层目录结构，如下所示：</p>
-<div class="highlight"><pre><span></span>|- index.py
-|- commons.py
-|- account.py
-|- lib
-    |- __init__.py
-    |- connectdb.py
-</pre></div>
-
-
-<p>想在index页面中调用lib包下connectdb模块中的方法，之前的方式不能满足需求了。试一下</p>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run</span><span class="p">():</span>
-    <span class="n">inp</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;url &gt; &#39;</span><span class="p">)</span>
-    <span class="n">m</span><span class="p">,</span> <span class="n">f</span> <span class="o">=</span> <span class="n">inp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
-    <span class="n">obj_module</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="s1">&#39;lib.&#39;</span> <span class="o">+</span> <span class="n">m</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj_module</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
-        <span class="n">func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj_module</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
-        <span class="n">func</span><span class="p">()</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;404&#39;</span><span class="p">)</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">run</span><span class="p">()</span>
-
-<span class="o">------------</span>
-<span class="mi">404</span>
-</pre></div>
-
-
-<p>看下<code>__import __</code>源码：</p>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__import__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">globals</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="nb">locals</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">fromlist</span><span class="o">=</span><span class="p">(),</span> <span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span> <span class="c1"># real signature unknown; restored from __doc__</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    __import__(name, globals=None, locals=None, fromlist=(), level=0) -&gt; module</span>
-
-<span class="sd">    Import a module. Because this function is meant for use by the Python</span>
-<span class="sd">    interpreter and not for general use it is better to use</span>
-<span class="sd">    importlib.import_module() to programmatically import a module.</span>
-
-<span class="sd">    The globals argument is only used to determine the context;</span>
-<span class="sd">    they are not modified.  The locals argument is unused.  The fromlist</span>
-<span class="sd">    should be a list of names to emulate ``from name import ...&#39;&#39;, or an</span>
-<span class="sd">    empty list to emulate ``import name&#39;&#39;.</span>
-<span class="sd">    When importing a module from a package, note that __import__(&#39;A.B&#39;, ...)</span>
-<span class="sd">    returns package A when fromlist is empty, but its submodule B when</span>
-<span class="sd">    fromlist is not empty.  Level is used to determine whether to perform </span>
-<span class="sd">    absolute or relative imports. 0 is absolute while a positive number</span>
-<span class="sd">    is the number of parent directories to search relative to the current module.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">pass</span>
-</pre></div>
-
-
-<p>__import__函数中有一个fromlist参数，源码解释说，如果在一个包中导入一个模块，这个参数如果为空，则return这个包对象，如果这个参数不为空，则返回包下面指定的模块对象，于是做出如下修改:</p>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run</span><span class="p">():</span>
-    <span class="n">inp</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;url &gt; &#39;</span><span class="p">)</span>
-    <span class="n">m</span><span class="p">,</span> <span class="n">f</span> <span class="o">=</span> <span class="n">inp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
-    <span class="n">obj_module</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="s1">&#39;lib.&#39;</span> <span class="o">+</span> <span class="n">m</span><span class="p">,</span> <span class="n">fromlist</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj_module</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
-        <span class="n">func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj_module</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
-        <span class="n">func</span><span class="p">()</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;404&#39;</span><span class="p">)</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">run</span><span class="p">()</span>
-
-<span class="o">------------</span>
-<span class="n">url</span> <span class="o">&gt;</span> <span class="n">connectdb</span><span class="o">/</span><span class="n">mysql</span>
-<span class="err">已连接</span><span class="n">mysql</span>
-</pre></div>
-
-
-<p>上面的代码写死了lib前缀，相当于抛弃了commons和account两个导入的功能，所以以上代码并不完善，需求复杂后，还是需要对请求的url做一下判断</p>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run</span><span class="p">():</span>
-    <span class="n">inp</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;url &gt; &#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="n">m</span><span class="p">,</span> <span class="n">f</span> <span class="o">=</span> <span class="n">inp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
-        <span class="n">obj_module</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj_module</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
-            <span class="n">func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj_module</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
-            <span class="n">func</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;404&#39;</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-        <span class="n">p</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">f</span> <span class="o">=</span> <span class="n">inp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
-        <span class="n">obj_module</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">p</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">m</span><span class="p">,</span> <span class="n">fromlist</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj_module</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
-            <span class="n">func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj_module</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
-            <span class="n">func</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;404&#39;</span><span class="p">)</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">run</span><span class="p">()</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span><span class="c1"># 执行</span>
-<span class="c1"># python3 index.py</span>
-<span class="n">url</span> <span class="o">&gt;</span> <span class="n">lib</span><span class="o">/</span><span class="n">connectdb</span><span class="o">/</span><span class="n">mysql</span>
-<span class="err">已连接</span><span class="n">mysql</span>
-
-<span class="c1"># python3 index.py</span>
-<span class="n">url</span> <span class="o">&gt;</span> <span class="n">account</span><span class="o">/</span><span class="n">del_user</span>
-<span class="err">删除用户</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run</span><span class="p">():</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="n">m</span><span class="p">,</span> <span class="n">f</span> <span class="o">=</span> <span class="n">inp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
-        <span class="n">obj_module</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
-        <span class="n">getf</span><span class="p">(</span><span class="n">obj_module</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-        <span class="n">p</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">f</span> <span class="o">=</span> <span class="n">inp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
-        <span class="n">obj_module</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">p</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">m</span><span class="p">,</span> <span class="n">fromlist</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-        <span class="n">getf</span><span class="p">(</span><span class="n">obj_module</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">getf</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
-    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
-        <span class="n">func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
-        <span class="n">func</span><span class="p">()</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;404&#39;</span><span class="p">)</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">inp</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;url &gt; &#39;</span><span class="p">)</span>
-    <span class="n">run</span><span class="p">()</span>
-</pre></div>                </article>
-            </aside><!-- /#featured -->
+</footer><!-- /.post-info -->                <p>Python反射（自省）详解</p>
+                <a class="readmore" href="/pythonfan-she-zi-sheng-xiang-jie.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+                </section><!-- /#content -->
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>
