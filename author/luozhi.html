@@ -1,436 +1,186 @@
 <!DOCTYPE html>
 <html lang="zh">
+
 <head>
-        <meta charset="utf-8" />
-        <title>智@DevOps之路 - luozhi</title>
-        <link rel="stylesheet" href="/theme/css/main.css" />
+      <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+
+  <title>智@DevOps之路 - Articles by luozhi</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+  <link href="/" rel="canonical" />
+
+  <!-- Feed -->
+
+  <link href="/theme/css/style.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="/theme/css/code_blocks/tomorrow.css" rel="stylesheet">
+
+
+  <!-- Custom fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Montserrat:400,300' rel='stylesheet' type='text/css' />
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css" />
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+
+
+
+<!-- Open Graph -->
+<meta property="og:site_name" content="智@DevOps之路"/>
+<meta property="og:type" content="blog"/>
+<meta property="og:title" content="智@DevOps之路"/>
+<meta property="og:description" content="View the blog."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/"/>
+<meta property="og:image" content="/theme/images/home-bg.jpg">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Website",
+  "name": " 智@DevOps之路 ",
+  "url" : "/",
+  "image": "/theme/images/home-bg.jpg",
+  "description": "View the blog."
+}
+</script>
 </head>
+<!-- TODO : Body class -->
+<body class="home-template">
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="/">智@DevOps之路 </a></h1>
-                <nav><ul>
-                    <li><a href="/category/python.html">python</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
-
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/pythonmian-xiang-dui-xiang-xiang-jie.html">Python面向对象详解</a></h1>
-<footer class="post-info">
-        <abbr class="published" title="2017-09-02T18:57:00+08:00">
-                Published: 六 02 九月 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/luozhi.html">luozhi</a>
-        </address>
-<p>In <a href="/category/python.html">python</a>.</p>
-<p>tags: <a href="/tag/python.html">python</a> </p>
-</footer><!-- /.post-info --><h1>Python面向对象详解</h1>
-<blockquote>
-<p>面向对象的设计思想来自于自然界，将函数进行分类封装。
-面向对象编程（Object Oriented Programming，OOP，面向对象程序设计）
-面向对象的三大特点，封装、继承和多态。</p>
-</blockquote>
-<h2>一、封装</h2>
-<p>将实现某一特定功能的函数封装到一个类中。以便在其他地方可以更方便的调用。
-首先看Python的面向对象中涉及的一些概念。 </p>
-<h3>1、概念</h3>
-<ul>
-<li>类：类是对现实世界中一些实物的封装。</li>
-<li>类对象：定义一个类之后便会产生一个类对象。</li>
-<li>实例对象：类实例化操作之后便会产生一个实例对象。</li>
-<li>类属性：类对象拥有的属性，被类对象的所有实例对象所共有，在内存中只存在一个副本。</li>
-<li>实例属性：为某个实例对象所特有。</li>
-<li>方法：与某个对象绑定的函数称作为方法，类中定义的函数一般与类对象或者实例对象绑定了，所以称之为方法。</li>
-<li>函数：类外定义的函数。</li>
-</ul>
-<p>下面看一个具体的例子</p>
-<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">People</span><span class="p">:</span>
-
-    <span class="n">planet</span> <span class="o">=</span> <span class="s2">&quot;Earth&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="n">age</span>
-
-    <span class="k">def</span> <span class="nf">printMessgae</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;country : {},&#39;</span>
-              <span class="s1">&#39;name : {}, &#39;</span>
-              <span class="s1">&#39;age : {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">People</span><span class="o">.</span><span class="n">Planet</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">age</span><span class="p">))</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">p</span> <span class="o">=</span> <span class="n">People</span><span class="p">(</span><span class="s1">&#39;lz&#39;</span><span class="p">,</span> <span class="mi">18</span><span class="p">)</span>
-    <span class="n">p</span><span class="o">.</span><span class="n">printMessgae</span><span class="p">()</span>
-</pre></div>
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
 
 
-<p>上面定义了一个类People，则产生了一个类对象People。
-通过类对象实例化了一个实例对象p。
-country为类属性，name,age为实例属性。
-printMessage()为方法。</p>
-<h3>2、属性</h3>
-<p>属性包括：</p>
-<ul>
-<li>类属性：属于类对象。在内存中只保存一份。</li>
-<li>实例属性：属于实例对象。在每个对象中都保存一份。</li>
-</ul>
-<p>从上面的概念和例子中可看到他们在定义和使用中有所区别。本质的区别在于<strong>在内存中保存的位置不同</strong>。</p>
-<h3>3、方法</h3>
-<p>方法包括类方法，实例方法和静态方法。三种方法在<strong>内存中都归属于类</strong>，在内存中只保存一份。</p>
-<h4>（1）、类方法，实例方法以及静态方法</h4>
-<table>
-<thead>
-<tr>
-<th>方法</th>
-<th>装饰器</th>
-<th>参数</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>类方法</td>
-<td>@classmethod</td>
-<td>第一个参数必须是类对象，一般为cls</td>
-<td>一般通过类对象调用，可以用来修改类属性。</td>
-</tr>
-<tr>
-<td>实例方法</td>
-<td>无</td>
-<td>第一个参数必须为实例对象，一般为self</td>
-<td>只能通过实例对象调用。</td>
-</tr>
-<tr>
-<td>静态方法</td>
-<td>@staticmethod</td>
-<td>不需要定义参数</td>
-<td>通过类对象调用。</td>
-</tr>
-</tbody>
-</table>
-<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">People</span><span class="p">:</span>
-
-    <span class="n">planet</span> <span class="o">=</span> <span class="s2">&quot;Earth&quot;</span>
-    <span class="n">__birth</span> <span class="o">=</span> <span class="s1">&#39;niceMan&#39;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="n">age</span>
-
-    <span class="k">def</span> <span class="nf">printMessgae</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;country : {},&#39;</span>
-              <span class="s1">&#39;name : {}, &#39;</span>
-              <span class="s1">&#39;age : {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">People</span><span class="o">.</span><span class="n">planet</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">age</span><span class="p">))</span>
-
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">getPlanet</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">planet</span>
-
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">setPlanet</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span><span class="n">planet</span><span class="p">):</span>
-        <span class="bp">cls</span><span class="o">.</span><span class="n">planet</span> <span class="o">=</span> <span class="n">planet</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">planet</span>
-
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">getBirth</span><span class="p">():</span>
-        <span class="k">return</span> <span class="n">People</span><span class="o">.</span><span class="n">__birth</span>
-</pre></div>
-
-
-<p>上面例子中，printMessage()为普通方法，getPlanet()，setPlanet()为类方法。getBirth()为静态方法。</p>
-<h4>（2）、特殊方法</h4>
-<table>
-<thead>
-<tr>
-<th>方法</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>__init__(self,...)</td>
-<td>构造函数，初始化对象，在创建新对象时调用</td>
-</tr>
-<tr>
-<td>__del__(self)</td>
-<td>析构函数，释放对象，在对象被删除之前调用</td>
-</tr>
-<tr>
-<td>__new__(cls,<em>args,</em>*kwd)</td>
-<td>实例的生成操作，在__init__之前被调用。</td>
-</tr>
-<tr>
-<td>__str__(self)</td>
-<td>在使用print语句时被调用</td>
-</tr>
-<tr>
-<td>__getitem__(self,key)</td>
-<td>获取序列的索引key对应的值，等价于seq[key]</td>
-</tr>
-<tr>
-<td>__setitem__(self, key, vaule)</td>
-<td>设置key对应的值</td>
-</tr>
-<tr>
-<td>__delitem__(self, key)</td>
-<td>删除key对应的值</td>
-</tr>
-<tr>
-<td>__iter__(self)</td>
-<td>用于迭代器</td>
-</tr>
-<tr>
-<td>__len__(self)</td>
-<td>在调用内联函数len()时被调用</td>
-</tr>
-<tr>
-<td>__cmp__(stc,dst)</td>
-<td>比较两个对象src和dst</td>
-</tr>
-<tr>
-<td>__getattr__(s,name)</td>
-<td>获取属性的值</td>
-</tr>
-<tr>
-<td>__setattr__(s,name,value)</td>
-<td>设置属性的值</td>
-</tr>
-<tr>
-<td>__delattr__(s,name)</td>
-<td>删除name属性</td>
-</tr>
-<tr>
-<td>__getattribute__()</td>
-<td>_<em>getattribute__()功能与__getattr_</em>()类似</td>
-</tr>
-<tr>
-<td>__gt__(self,other)</td>
-<td>判断self对象是否大于other对象</td>
-</tr>
-<tr>
-<td>__lt__(slef,other)</td>
-<td>判断self对象是否小于other对象</td>
-</tr>
-<tr>
-<td>__ge__(slef,other)</td>
-<td>判断self对象是否大于或者等于other对象</td>
-</tr>
-<tr>
-<td>__le__(slef,other)</td>
-<td>判断self对象是否小于或者等于other对象</td>
-</tr>
-<tr>
-<td>__eq__(slef,other)</td>
-<td>判断self对象是否等于other对象</td>
-</tr>
-<tr>
-<td>__call__(self,*args)</td>
-<td>把实例对象作为函数调用</td>
-</tr>
-<tr>
-<td>__doc__(self)</td>
-<td>类的描述信息</td>
-</tr>
-<tr>
-<td>__module__(self)</td>
-<td>当前操作所在的模块</td>
-</tr>
-<tr>
-<td>__class__(self)</td>
-<td>当前操作对象所属的类</td>
-</tr>
-<tr>
-<td>__dict__(self)</td>
-<td>类或者对象的所有成员</td>
-</tr>
-</tbody>
-</table>
-<h3>3、成员修饰符</h3>
-<blockquote>
-<p>成员包括属性和方法。</p>
-</blockquote>
-<p>成员修饰符：</p>
-<ul>
-<li>公有成员：任何地方都可以访问。</li>
-<li>私有成员：只在类的内部可以访问。定义的方法是在命名时，在名字前面加两个下划线'__'</li>
-</ul>
-<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">People</span><span class="p">:</span>
-
-    <span class="n">planet</span> <span class="o">=</span> <span class="s2">&quot;Earth&quot;</span>
-    <span class="n">__birth</span> <span class="o">=</span> <span class="s1">&#39;niceMan&#39;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="n">age</span>
-
-    <span class="k">def</span> <span class="nf">printMessgae</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;country : {},&#39;</span>
-              <span class="s1">&#39;name : {}, &#39;</span>
-              <span class="s1">&#39;age : {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">People</span><span class="o">.</span><span class="n">planet</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">age</span><span class="p">))</span>
-
-    <span class="k">def</span> <span class="nf">__eat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span>
-</pre></div>
-
-
-<p>其中planet为公有属性，__birth为私有属性。
-printMessage()位公有方法，__eat()为私有方法。
-<em>ps：如果想要强制访问私有字段，可以通过 【对象._类名__私有字段名 】访问（如：obj._C__foo），不建议强制访问私有成员。</em></p>
-<h2>二、继承</h2>
-<p>通过继承，子类可以继承并扩展父类的功能。
-被继承的类称为父类、超类或者基类。继承的类称为子类。
-Python继承支持多重继承，能够让一个子类拥有多个父类。多个父类之间用逗号隔开。</p>
-<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">UniversityMember</span><span class="p">:</span>  
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="n">age</span><span class="p">):</span>  
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>  
-        <span class="bp">self</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="n">age</span>  
-
-    <span class="k">def</span> <span class="nf">getName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>  
-
-    <span class="k">def</span> <span class="nf">getAge</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">age</span>  
-
-<span class="k">class</span> <span class="nc">Student</span><span class="p">(</span><span class="n">UniversityMember</span><span class="p">):</span>  
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="n">age</span><span class="p">,</span><span class="n">sno</span><span class="p">,</span><span class="n">mark</span><span class="p">):</span>  
-        <span class="n">UniversityMember</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="n">age</span><span class="p">)</span>     <span class="c1">#注意要显示调用父类构造方法，并传递参数self  </span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sno</span> <span class="o">=</span> <span class="n">sno</span>  
-        <span class="bp">self</span><span class="o">.</span><span class="n">mark</span> <span class="o">=</span> <span class="n">mark</span>  
-
-    <span class="k">def</span> <span class="nf">getSno</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sno</span>  
-
-    <span class="k">def</span> <span class="nf">getMark</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mark</span>  
+    </ul>
+  </div>
+</nav>
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="blog-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+            <div class="post-cover cover" style="background-image: url('/theme/images/post-bg.jpg')">
+      </div>
+    </header>
 
 
 
-<span class="k">class</span> <span class="nc">Teacher</span><span class="p">(</span><span class="n">UniversityMember</span><span class="p">):</span>  
+  <section id="wrapper">
+    <a class="hidden-close"></a>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="n">age</span><span class="p">,</span><span class="n">tno</span><span class="p">,</span><span class="n">salary</span><span class="p">):</span>  
-        <span class="n">UniversityMember</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="n">age</span><span class="p">)</span>  
-        <span class="bp">self</span><span class="o">.</span><span class="n">tno</span> <span class="o">=</span> <span class="n">tno</span>  
-        <span class="bp">self</span><span class="o">.</span><span class="n">salary</span> <span class="o">=</span> <span class="n">salary</span>  
+<div id="index" class="container">
+  <main class="content" role="main">
+    <div class="extra-pagination">
+<nav class="pagination" role="pagination">
+  <div class="inner">
+    <span class="pagination-info">Page 1 / 1</span>
+    <div class="clear"></div>
+  </div>
+</nav>
+    </div>
 
-    <span class="k">def</span> <span class="nf">getTno</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tno</span>  
+        <article class="post">
+        <div class="inner">
+            <header class="post-header">         
+                <h2 class="post-title"><a href="/pythonmian-xiang-dui-xiang-xiang-jie.html" rel="bookmark" title="Permalink to Python面向对象详解">Python面向对象详解</a>
+                </h2>
+                <span class="post-meta">
+                        <a href="/author/luozhi.html">Luozhi</a>
+                     | <time datetime="六 02 九月 2017">六 02 九月 2017</time>
+                </span>
+                <div class="clear"></div>
+            </header>
+                <section class="post-excerpt">
+                    <p>
+                        Python面向对象详解
+                    </p>
+                </section>
+<p>
+  <a data-disqus-identifier="/pythonmian-xiang-dui-xiang-xiang-jie.html" href="/pythonmian-xiang-dui-xiang-xiang-jie.html#disqus_thread">comments</a>
+</p>
+            </div>
+        </article>
+        <article class="post">
+        <div class="inner">
+            <header class="post-header">         
+                <h2 class="post-title"><a href="/pythonfan-she-zi-sheng-xiang-jie.html" rel="bookmark" title="Permalink to Python反射（自省）详解">Python反射（自省）详解</a>
+                </h2>
+                <span class="post-meta">
+                        <a href="/author/luozhi.html">Luozhi</a>
+                     | <time datetime="二 22 八月 2017">二 22 八月 2017</time>
+                </span>
+                <div class="clear"></div>
+            </header>
+                <section class="post-excerpt">
+                    <p>
+                        Python反射（自省）详解
+                    </p>
+                </section>
+<p>
+  <a data-disqus-identifier="/pythonfan-she-zi-sheng-xiang-jie.html" href="/pythonfan-she-zi-sheng-xiang-jie.html#disqus_thread">comments</a>
+</p>
+            </div>
+        </article>
 
-    <span class="k">def</span> <span class="nf">getSalary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">salary</span>
-</pre></div>
+<nav class="pagination" role="pagination">
+  <div class="inner">
+    <span class="pagination-info">Page 1 / 1</span>
+    <div class="clear"></div>
+  </div>
+</nav>
+  </main>
+</div>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
 
 
-<p>子类实例化时，构造函数不会自动调用父类的构造函数。必须在子类中显示的调用。
-可以通过以下两种方式调用父类的构造函数：</p>
-<ul>
-<li><code>父类.__init__()</code></li>
-<li><code>super(子类， self).__init__()</code></li>
-</ul>
-<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Base</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">print</span> <span class="s2">&quot;Base created&quot;</span>
+          <span class="credits-theme">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a></span>
+          <span class="credits-software">Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
 
-<span class="k">class</span> <span class="nc">ChildA</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">Base</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+  <script type="text/javascript" src="/theme/js/script.js"></script>
 
-<span class="k">class</span> <span class="nc">ChildB</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ChildB</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-</pre></div>
-
-
-<h2>三、多态</h2>
-<p>我理解Python的多态就是，子类可以直接继承使用父类的方法。同时也可以根据子类的需求，重写父类的方法。</p>
-<ul>
-<li>对扩展开放（Open for extension）：允许子类重写方法函数</li>
-<li>对修改封闭（Closed for modification）：不重写，直接继承父类方法函数</li>
-</ul>
-<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Person</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="n">sex</span><span class="p">):</span>
-         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-         <span class="bp">self</span><span class="o">.</span><span class="n">sex</span> <span class="o">=</span> <span class="n">sex</span>
-
-     <span class="k">def</span> <span class="nf">print_title</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sex</span> <span class="o">==</span> <span class="s2">&quot;male&quot;</span><span class="p">:</span>
-             <span class="k">print</span><span class="p">(</span><span class="s2">&quot;man&quot;</span><span class="p">)</span>
-         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">sex</span> <span class="o">==</span> <span class="s2">&quot;female&quot;</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;woman&quot;</span><span class="p">)</span>
-
-<span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Person</span><span class="p">):</span>                <span class="c1"># Child 继承 Person</span>
-    <span class="k">def</span> <span class="nf">print_title</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sex</span> <span class="o">==</span> <span class="s2">&quot;male&quot;</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;boy&quot;</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">sex</span> <span class="o">==</span> <span class="s2">&quot;female&quot;</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;girl&quot;</span><span class="p">)</span>
-</pre></div>
-
-
-<p>上面的例子中，父类根据性别的不同，分别输出<code>male</code>和<code>female</code>。
-子类Child则重写了这一方法，根据性别的不同，分别输出<code>boy</code>和<code>girl</code>。</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/pythonfan-she-zi-sheng-xiang-jie.html" rel="bookmark"
-                           title="Permalink to Python反射（自省）详解">Python反射（自省）详解</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-08-22T13:57:00+08:00">
-                Published: 二 22 八月 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/luozhi.html">luozhi</a>
-        </address>
-<p>In <a href="/category/python.html">python</a>.</p>
-<p>tags: <a href="/tag/python.html">python</a> </p>
-</footer><!-- /.post-info -->                <p>Python反射（自省）详解</p>
-                <a class="readmore" href="/pythonfan-she-zi-sheng-xiang-jie.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
-                </section><!-- /#content -->
-        <section id="extras" class="body">
-                <div class="blogroll">
-                        <h2>links</h2>
-                        <ul>
-                            <li><a href="http://getpelican.com/">Pelican</a></li>
-                            <li><a href="http://python.org/">Python.org</a></li>
-                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
-                        </ul>
-                </div><!-- /.blogroll -->
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
-
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
+<script type="text/javascript">
+    var disqus_shortname = 'blog-lz';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
 </body>
 </html>
