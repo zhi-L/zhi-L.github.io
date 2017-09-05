@@ -5,41 +5,41 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>/</loc>
-<lastmod>2017-09-05T17:27:26-00:00</lastmod>
+<lastmod>2017-09-05T17:56:38-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/archives.html</loc>
-<lastmod>2017-09-05T17:27:26-00:00</lastmod>
+<lastmod>2017-09-05T17:56:38-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/tags.html</loc>
-<lastmod>2017-09-05T17:27:26-00:00</lastmod>
+<lastmod>2017-09-05T17:56:38-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>/categories.html</loc>
-<lastmod>2017-09-05T17:27:26-00:00</lastmod>
+<lastmod>2017-09-05T17:56:38-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
-<loc>/pythonmian-xiang-dui-xiang-xiang-jie.html</loc>
+<loc>/pages/2017/09/02/pythonmian-xiang-dui-xiang-xiang-jie/</loc>
 <lastmod>2017-09-02T18:57:00+08:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.7</priority>
 </url>
 
 <url>
-<loc>/pythonfan-she-zi-sheng-xiang-jie.html</loc>
+<loc>/pages/2017/08/22/pythonfan-she-zi-sheng-xiang-jie/</loc>
 <lastmod>2017-08-22T13:57:00+08:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.7</priority>
