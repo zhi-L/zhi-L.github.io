@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
 
-  <title>智@DevOps之路 - Authors</title>
+  <title>About</title>
 
 
   <meta name="HandheldFriendly" content="True" />
@@ -36,27 +36,47 @@
   <![endif]-->
 
 
+    <link href="/pages/about/" rel="canonical" />
+
+        <meta name="description" content="个人介绍 我是罗智，网上马甲喜欢用zhi，或者Rodger。毕业于合肥工业大学数学与应用数学专业，安徽肥东县人。目前在一家cdn公司从事开发运维。崇尚技术，热爱学习。 以下方式可以联系到我： Email: luozhi0551@gmail.com 微博:...">
+
+        <meta name="author" content="罗智">
+
+
+
 
 
 <!-- Open Graph -->
 <meta property="og:site_name" content="智@DevOps之路"/>
-<meta property="og:type" content="blog"/>
-<meta property="og:title" content="智@DevOps之路"/>
-<meta property="og:description" content="View the blog."/>
+<meta property="og:title" content="About"/>
+<meta property="og:description" content="个人介绍 我是罗智，网上马甲喜欢用zhi，或者Rodger。毕业于合肥工业大学数学与应用数学专业，安徽肥东县人。目前在一家cdn公司从事开发运维。崇尚技术，热爱学习。 以下方式可以联系到我： Email: luozhi0551@gmail.com 微博:..."/>
 <meta property="og:locale" content="en_US"/>
-<meta property="og:url" content="/"/>
-<meta property="og:image" content="/theme/images/home-bg.jpg">
+<meta property="og:url" content="/pages/about/"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2017-09-18 08:00:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/luo-zhi.html">
+<meta property="article:section" content="misc"/>
+<meta property="og:image" content="/theme/images/post-bg.jpg">
 
 <!-- Twitter Card -->
 
 <script type="application/ld+json">
 {
-  "@context" : "http://schema.org",
-  "@type" : "Website",
-  "name": " 智@DevOps之路 ",
-  "url" : "/",
-  "image": "/theme/images/home-bg.jpg",
-  "description": "View the blog."
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "About",
+  "headline": "About",
+  "datePublished": "2017-09-18 08:00:00+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "罗智",
+    "url": "/author/luo-zhi.html"
+  },
+  "image": "/theme/images/post-bg.jpg",
+  "url": "/pages/about/",
+  "description": "个人介绍 我是罗智，网上马甲喜欢用zhi，或者Rodger。毕业于合肥工业大学数学与应用数学专业，安徽肥东县人。目前在一家cdn公司从事开发运维。崇尚技术，热爱学习。 以下方式可以联系到我： Email: luozhi0551@gmail.com 微博:..."
 }
 </script>
 </head>
@@ -76,9 +96,14 @@
     </ul>
   </div>
 </nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
     <!-- Page Header -->
     <!-- Set your background image for this header on the line below. -->
-    <header id="blog-header" class="has-cover">
+    <header id="post-header" class="has-cover">
       <div class="inner">
         <nav id="navigation">
             <span id="home-button" class="nav-button">
@@ -88,22 +113,36 @@
             <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
           </span>
         </nav>
-        <h1 class="post-title">Articles by </h1>
-            <div class="post-cover cover" style="background-image: url('/theme/images/post-bg.jpg')">
+        <h1 class="post-title">About</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="/author/luo-zhi.html">罗智</a>
+            | <time datetime="一 18 九月 2017">一 18 九月 2017</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('/theme/images/about-bg.jpg')">
       </div>
     </header>
 
   <section id="wrapper">
     <a class="hidden-close"></a>
-      <article class="post">
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
         <div class="inner">
-            <a href="/author/luozhi.html" rel="bookmark">
-                <h2 class="post-title">
-                    luozhi (3)
-                </h2>
-            </a>
-        </div>
-      </article>
+            <section class="post-content">
+                <h2>个人介绍</h2>
+<p>我是罗智，网上马甲喜欢用zhi，或者Rodger。毕业于合肥工业大学数学与应用数学专业，安徽肥东县人。目前在一家cdn公司从事开发运维。崇尚技术，热爱学习。</p>
+<p>以下方式可以联系到我：</p>
+<ul>
+<li>Email: luozhi0551@gmail.com</li>
+<li>微博: https://weibo.com/luozhi92</li>
+</ul>
+            </section>
+            </div>
+        </article>
+    </main>
       <!-- TODO : Body class -->
     <div id="body-class" style="display: none;" class=""></div>
 
@@ -121,24 +160,5 @@
 
   <script type="text/javascript" src="/theme/js/script.js"></script>
 
-    <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-105803699-1']);
-    _gaq.push(['_trackPageview']);
-    (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-    </script>
-<script type="text/javascript">
-    var disqus_shortname = 'luozhiblog';
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-</script>
 </body>
 </html>
